@@ -10,14 +10,14 @@ import (
 	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
-// Manager is a wrapper for the stream manager calls.
-type Manager struct {
+// ManagerClient is a wrapper for the stream manager calls.
+type ManagerClient struct {
 	instance *streamManager.StreamManager
 	acc      Account
 }
 
 // New creates a Manager instance
-func New(url string, addr string, keyfilePath string, pwd string) (*Manager, error) {
+func New(url string, addr string, keyfilePath string, pwd string) (*ManagerClient, error) {
 	managerAddress := common.HexToAddress(addr)
 
 	client, err := ethclient.Dial(url)
@@ -37,7 +37,7 @@ func New(url string, addr string, keyfilePath string, pwd string) (*Manager, err
 		return nil, err
 	}
 
-	m := &Manager{
+	m := &ManagerClient{
 		instance: managerInstance,
 		acc:      acc,
 	}
@@ -46,7 +46,7 @@ func New(url string, addr string, keyfilePath string, pwd string) (*Manager, err
 }
 
 // AddValidator adds a new address to the validator map in the StreamManager smart contract.
-func (m *Manager) AddValidator(ctx context.Context, address string) error {
+func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
 	opt := m.acc.getTxOptions()
 
 	// TODO: check that address is not already validator
@@ -67,7 +67,7 @@ func (m *Manager) AddValidator(ctx context.Context, address string) error {
 }
 
 // RemoveValidator removes an address from the validator map in the StreamManager smart contract.
-func (m *Manager) RemoveValidator(ctx context.Context, address string) error {
+func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
 	opt := m.acc.getTxOptions()
 
 	addr := common.HexToAddress(address)
@@ -86,7 +86,7 @@ func (m *Manager) RemoveValidator(ctx context.Context, address string) error {
 }
 
 // ApproveStreamCreation approves a user`s stream request.
-func (m *Manager) ApproveStreamCreation(streamID *big.Int, chunks []*big.Int) error {
+func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.Int) error {
 	opt := m.acc.getTxOptions()
 
 	// TODO: add checks so we can return informative errors when needed
@@ -105,6 +105,6 @@ func (m *Manager) ApproveStreamCreation(streamID *big.Int, chunks []*big.Int) er
 }
 
 // addInputChunk
-func (m *Manager) addInputChunk() {
+func (m *ManagerClient) addInputChunk() {
 
 }
