@@ -16,8 +16,8 @@ type ManagerClient struct {
 	acc      Account
 }
 
-// New creates a Manager instance
-func New(url string, addr string, keyfilePath string, pwd string) (*ManagerClient, error) {
+// NewManagerClient creates a ManagerClient instance
+func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (*ManagerClient, error) {
 	managerAddress := common.HexToAddress(addr)
 
 	client, err := ethclient.Dial(url)
@@ -104,7 +104,12 @@ func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.I
 	return nil
 }
 
-// addInputChunk
-func (m *ManagerClient) addInputChunk() {
+// AddInputChunk will addd input chunk ids to the stream contract
+func (m *ManagerClient) AddInputChunk() {
+
+}
+
+// AllowRefund will allow the client to refund the escrow for the given stream id.
+func (m *ManagerClient) AllowRefund() {
 
 }
