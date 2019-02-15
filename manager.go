@@ -58,7 +58,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.caller.client, tx)
 	if err != nil {
 		return err
 	}

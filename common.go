@@ -1,7 +1,9 @@
 package protocol
 
 import (
+	"context"
 	"io/ioutil"
+	"math/big"
 
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/accounts/keystore"
@@ -40,4 +42,10 @@ func (a *Caller) getTxOptions() *bind.TransactOpts {
 	opts := bind.NewKeyedTransactor(a.key.PrivateKey)
 
 	return opts
+}
+
+// GetAccountBalance return the balance of the account that has been loadedin the caller
+func (a *Caller) GetAccountBalance() (*big.Int, error) {
+	return a.client.BalanceAt(context.Background(), a.key.Address, nil)
+
 }
