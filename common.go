@@ -8,18 +8,19 @@ import (
 	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
-type accountUtils interface {
+type account interface {
 	loadAccount(path string, pwd string) error
 	getTxOptions() *bind.TransactOpts
+	GetAccountBalance() error
 }
 
-// Account defines methods and properties required for account loading.
-type Account struct {
+// Caller defines methods and properties required for account loading.
+type Caller struct {
 	client *ethclient.Client
 	key    *keystore.Key
 }
 
-func (a *Account) loadAccount(path string, pwd string) error {
+func (a *Caller) loadAccount(path string, pwd string) error {
 	keyjson, e := ioutil.ReadFile(path)
 	if e != nil {
 		return e
@@ -35,7 +36,7 @@ func (a *Account) loadAccount(path string, pwd string) error {
 	return nil
 }
 
-func (a *Account) getTxOptions() *bind.TransactOpts {
+func (a *Caller) getTxOptions() *bind.TransactOpts {
 	opts := bind.NewKeyedTransactor(a.key.PrivateKey)
 
 	return opts

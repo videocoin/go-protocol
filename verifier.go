@@ -7,5 +7,5 @@ import (
 // VerifierClient is a wrapper for the transcoder calls.
 type VerifierClient struct {
 	instance *stream.Stream
-	acc      Account
+	caller   Caller
 }

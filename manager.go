@@ -13,7 +13,7 @@ import (
 // ManagerClient is a wrapper for the stream manager calls.
 type ManagerClient struct {
 	instance *streamManager.StreamManager
-	acc      Account
+	caller   Caller
 }
 
 // NewManagerClient creates a ManagerClient instance
@@ -25,9 +25,9 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 		return nil, err
 	}
 
-	acc := Account{client: client}
+	caller := Caller{client: client}
 
-	err = acc.loadAccount(keyfilePath, pwd)
+	err = caller.loadAccount(keyfilePath, pwd)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 
 	m := &ManagerClient{
 		instance: managerInstance,
-		acc:      acc,
+		caller:   caller,
 	}
 
 	return m, nil
@@ -47,7 +47,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 
 // AddValidator adds a new address to the validator map in the StreamManager smart contract.
 func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
-	opt := m.acc.getTxOptions()
+	opt := m.caller.getTxOptions()
 
 	// TODO: check that address is not already validator
 
@@ -58,7 +58,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.acc.client, tx)
+	_, err = bind.WaitMined(nil, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
@@ -68,7 +68,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 
 // RemoveValidator removes an address from the validator map in the StreamManager smart contract.
 func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
-	opt := m.acc.getTxOptions()
+	opt := m.caller.getTxOptions()
 
 	addr := common.HexToAddress(address)
 
@@ -77,7 +77,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.acc.client, tx)
+	_, err = bind.WaitMined(nil, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 
 // ApproveStreamCreation approves a user`s stream request.
 func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.Int) error {
-	opt := m.acc.getTxOptions()
+	opt := m.caller.getTxOptions()
 
 	// TODO: add checks so we can return informative errors when needed
 
@@ -96,7 +96,7 @@ func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.I
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.acc.client, tx)
+	_, err = bind.WaitMined(nil, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
