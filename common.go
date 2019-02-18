@@ -22,7 +22,7 @@ type Caller struct {
 	key    *keystore.Key
 }
 
-func (a *Caller) loadAccount(path string, pwd string) error {
+func (c *Caller) loadAccount(path string, pwd string) error {
 	keyjson, e := ioutil.ReadFile(path)
 	if e != nil {
 		return e
@@ -33,19 +33,18 @@ func (a *Caller) loadAccount(path string, pwd string) error {
 		return e
 	}
 
-	a.key = key
+	c.key = key
 
 	return nil
 }
 
-func (a *Caller) getTxOptions() *bind.TransactOpts {
-	opts := bind.NewKeyedTransactor(a.key.PrivateKey)
+func (c *Caller) getTxOptions() *bind.TransactOpts {
+	opts := bind.NewKeyedTransactor(c.key.PrivateKey)
 
 	return opts
 }
 
 // GetAccountBalance return the balance of the account that has been loadedin the caller
-func (a *Caller) GetAccountBalance() (*big.Int, error) {
-	return a.client.BalanceAt(context.Background(), a.key.Address, nil)
-
+func (c *Caller) GetAccountBalance() (*big.Int, error) {
+	return c.client.BalanceAt(context.Background(), c.key.Address, nil)
 }

@@ -14,6 +14,17 @@ import (
 type ManagerClient struct {
 	instance *streamManager.StreamManager
 	caller   Caller
+	addr     common.Address
+}
+
+// GetManagerAccAddr returns manager account address
+func (m *ManagerClient) GetManagerAccAddr() common.Address {
+	return m.caller.key.Address
+}
+
+// GetManagerContractAddr returns manager smart contract address
+func (m *ManagerClient) GetManagerContractAddr() common.Address {
+	return m.addr
 }
 
 // NewManagerClient creates a ManagerClient instance
@@ -40,6 +51,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 	m := &ManagerClient{
 		instance: managerInstance,
 		caller:   caller,
+		addr:     managerAddress,
 	}
 
 	return m, nil
@@ -110,6 +122,20 @@ func (m *ManagerClient) AddInputChunk() {
 }
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.
-func (m *ManagerClient) AllowRefund() {
+func (m *ManagerClient) AllowRefund(streamID *big.Int) error {
+	opt := m.caller.getTxOptions()
 
+	// TODO: add checks so we can return informative errors when needed
+
+	tx, err := m.instance.AllowRefund(opt, streamID)
+	if err != nil {
+		return err
+	}
+
+	_, err = bind.WaitMined(nil, m.caller.client, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
