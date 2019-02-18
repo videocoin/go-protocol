@@ -49,9 +49,29 @@ func NewUserClient(url string, addr string, keyfilePath string, pwd string) (*Us
 func (u *UserClient) RequestStream(ctx context.Context, streamID *big.Int, RTMP string, bitrates []*big.Int) error {
 	opt := u.caller.getTxOptions()
 
-	// TODO: check that address is not already validator
+	// TODO: check that request has not already been submitted
 
 	tx, err := u.instance.RequestStream(opt, streamID, RTMP, bitrates)
+	if err != nil {
+		return err
+	}
+
+	_, err = bind.WaitMined(ctx, u.caller.client, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// CreateStream creates a new stream after the user`s request has been approved
+func (u *UserClient) CreateStream(ctx context.Context, streamID *big.Int, funds *big.Int) error {
+	opt := u.caller.getTxOptions()
+	opt.Value = funds
+
+	// TODO: check that the request has been approved
+
+	tx, err := u.instance.CreateStream(opt, streamID)
 	if err != nil {
 		return err
 	}

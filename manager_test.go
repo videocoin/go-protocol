@@ -73,7 +73,22 @@ func TestApproveStreamCreation(t *testing.T) {
 }
 
 func TestAllowRefund(t *testing.T) {
-	// getNewStream()
+	streamId := big.NewInt(int64(rand.Int()))
+
+	err := createNewStream(streamId)
+	if err != nil {
+		t.Errorf("Failed to create a new stream: %s", err.Error())
+	}
+
+	m, err := getManager()
+	if err != nil {
+		t.Errorf("Failed to get manager client: %s", err.Error())
+	}
+
+	err = m.AllowRefund(context.Background(), streamId)
+	if err != nil {
+		t.Errorf("Failed to allow refund: %s", err.Error())
+	}
 }
 
 // utils
@@ -133,10 +148,9 @@ func getUser() (*protocol.UserClient, error) {
 	}
 }
 
-func getNewStream() error {
+func createNewStream(streamID *big.Int) error {
 	bitrates := []*big.Int{big.NewInt(1)}
 	bitrates = append(bitrates, big.NewInt(1))
-	streamId := big.NewInt(int64(rand.Int()))
 	RTMP := randStringRunes(10)
 
 	m, err := getManager()
@@ -149,11 +163,21 @@ func getNewStream() error {
 		return err
 	}
 
-	err = u.RequestStream(context.Background(), streamId, RTMP, bitrates)
+	err = u.RequestStream(context.Background(), streamID, RTMP, bitrates)
+	if err != nil {
+		return err
+	}
 
 	chunks := []*big.Int{}
 
-	err = m.ApproveStreamCreation(context.Background(), streamId, chunks)
+	err = m.ApproveStreamCreation(context.Background(), streamID, chunks)
+	if err != nil {
+		return err
+	}
+
+	funds := new(big.Int).Exp(big.NewInt(10), big.NewInt(19), nil) // send funds
+
+	err = u.CreateStream(context.Background(), streamID, funds)
 	if err != nil {
 		return err
 	}

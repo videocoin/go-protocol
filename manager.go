@@ -116,7 +116,7 @@ func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big
 	return nil
 }
 
-// AddInputChunk will addd input chunk ids to the stream contract
+// AddInputChunk will add input chunk ids to the stream contract
 func (m *ManagerClient) AddInputChunk() {
 
 }
