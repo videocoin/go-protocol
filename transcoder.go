@@ -57,7 +57,7 @@ func (t *TranscoderClient) SubmitProof(ctx context.Context, bitrate *big.Int, in
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, t.caller.client, tx)
+	_, err = bind.WaitMined(ctx, t.caller.client, tx)
 	if err != nil {
 		return err
 	}

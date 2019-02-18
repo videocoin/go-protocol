@@ -98,7 +98,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 }
 
 // ApproveStreamCreation approves a user`s stream request.
-func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.Int) error {
+func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big.Int, chunks []*big.Int) error {
 	opt := m.caller.getTxOptions()
 
 	// TODO: add checks so we can return informative errors when needed
@@ -108,7 +108,7 @@ func (m *ManagerClient) ApproveStreamCreation(streamID *big.Int, chunks []*big.I
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (m *ManagerClient) AddInputChunk() {
 }
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.
-func (m *ManagerClient) AllowRefund(streamID *big.Int) error {
+func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
 	opt := m.caller.getTxOptions()
 
 	// TODO: add checks so we can return informative errors when needed
@@ -132,7 +132,7 @@ func (m *ManagerClient) AllowRefund(streamID *big.Int) error {
 		return err
 	}
 
-	_, err = bind.WaitMined(nil, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.caller.client, tx)
 	if err != nil {
 		return err
 	}
