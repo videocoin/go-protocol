@@ -11,14 +11,23 @@ import (
 )
 
 func TestCtor(t *testing.T) {
-	_, err := getManager()
+	_, err := getManagerClient()
 	if err != nil {
 		t.Errorf("Failed to create manager client: %s", err.Error())
 	}
 }
 
+func TestCtor2(t *testing.T) {
+	keyfilePath := "./testdata/local/user"
+	pwd := "user"
+	_, err := protocol.NewManagerClient(ganache, managerAddr, keyfilePath, pwd)
+	if err == nil {
+		t.Errorf("Was expecting error")
+	}
+}
+
 func TestAddValidator(t *testing.T) {
-	m, err := getManager()
+	m, err := getManagerClient()
 
 	err = m.AddValidator(context.Background(), randAddress())
 	if err != nil {
@@ -27,7 +36,7 @@ func TestAddValidator(t *testing.T) {
 }
 
 func TestRemoveValidator(t *testing.T) {
-	m, err := getManager()
+	m, err := getManagerClient()
 
 	addr := randAddress()
 
@@ -49,12 +58,12 @@ func TestApproveStreamCreation(t *testing.T) {
 	streamId := big.NewInt(int64(rand.Int()))
 	RTMP := randStringRunes(10)
 
-	m, err := getManager()
+	m, err := getManagerClient()
 	if err != nil {
 		t.Errorf("Failed to get manager client: %s", err.Error())
 	}
 
-	u, err := getUser()
+	u, err := getUserClient()
 	if err != nil {
 		t.Errorf("Failed to get user client: %s", err.Error())
 	}
@@ -80,7 +89,7 @@ func TestAllowRefund(t *testing.T) {
 		t.Errorf("Failed to create a new stream: %s", err.Error())
 	}
 
-	m, err := getManager()
+	m, err := getManagerClient()
 	if err != nil {
 		t.Errorf("Failed to get manager client: %s", err.Error())
 	}
@@ -120,7 +129,7 @@ func randStringRunes(n int) string {
 	return string(b)
 }
 
-func getManager() (*protocol.ManagerClient, error) {
+func getManagerClient() (*protocol.ManagerClient, error) {
 	keyfilePath := "./testdata/local/manager"
 	pwd := "local"
 
@@ -134,7 +143,7 @@ func getManager() (*protocol.ManagerClient, error) {
 	}
 }
 
-func getUser() (*protocol.UserClient, error) {
+func getUserClient() (*protocol.UserClient, error) {
 	keyfilePath := "./testdata/local/manager"
 	pwd := "local"
 
@@ -153,12 +162,12 @@ func createNewStream(streamID *big.Int) error {
 	bitrates = append(bitrates, big.NewInt(1))
 	RTMP := randStringRunes(10)
 
-	m, err := getManager()
+	m, err := getManagerClient()
 	if err != nil {
 		return err
 	}
 
-	u, err := getUser()
+	u, err := getUserClient()
 	if err != nil {
 		return err
 	}

@@ -2,6 +2,7 @@ package protocol
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 
 	"github.com/VideoCoin/go-protocol/abis/streamManager"
@@ -52,6 +53,17 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 		instance: managerInstance,
 		caller:   caller,
 		addr:     managerAddress,
+	}
+
+	isOwner, err := managerInstance.IsOwner(&bind.CallOpts{From: m.caller.key.Address})
+	if err != nil {
+		return nil, err
+	}
+
+	if !isOwner {
+		owner, err := managerInstance.Owner(&bind.CallOpts{})
+		err = fmt.Errorf("Account provided %s, is not owner. Real owner is: %s ", m.caller.key.Address.String(), owner.String())
+		return nil, err
 	}
 
 	return m, nil
