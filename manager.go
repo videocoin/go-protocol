@@ -13,14 +13,14 @@ import (
 
 // ManagerClient is a wrapper for the stream manager calls.
 type ManagerClient struct {
-	instance *streamManager.StreamManager
-	caller   Caller
-	addr     common.Address
+	ManagerContract
+	Caller
+	addr common.Address
 }
 
 // GetManagerAccAddr returns manager account address
 func (m *ManagerClient) GetManagerAccAddr() common.Address {
-	return m.caller.key.Address
+	return m.key.Address
 }
 
 // GetManagerContractAddr returns manager smart contract address
@@ -38,31 +38,28 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 	}
 
 	caller := Caller{client: client}
-
 	err = caller.loadAccount(keyfilePath, pwd)
 	if err != nil {
 		return nil, err
 	}
 
-	managerInstance, err := streamManager.NewStreamManager(managerAddress, client)
+	instance, err := streamManager.NewStreamManager(managerAddress, client)
 	if err != nil {
 		return nil, err
 	}
 
-	m := &ManagerClient{
-		instance: managerInstance,
-		caller:   caller,
-		addr:     managerAddress,
-	}
+	contract := ManagerContract{instance}
 
-	isOwner, err := managerInstance.IsOwner(&bind.CallOpts{From: m.caller.key.Address})
+	m := &ManagerClient{contract, caller, managerAddress}
+
+	isOwner, err := m.instance.IsOwner(&bind.CallOpts{From: m.key.Address})
 	if err != nil {
 		return nil, err
 	}
 
 	if !isOwner {
-		owner, err := managerInstance.Owner(&bind.CallOpts{})
-		err = fmt.Errorf("Account provided %s, is not owner. Real owner is: %s ", m.caller.key.Address.String(), owner.String())
+		owner, err := m.instance.Owner(&bind.CallOpts{})
+		err = fmt.Errorf("Account provided %s, is not owner. Real owner is: %s ", m.key.Address.String(), owner.String())
 		return nil, err
 	}
 
@@ -71,7 +68,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 
 // AddValidator adds a new address to the validator map in the StreamManager smart contract.
 func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
-	opt := m.caller.getTxOptions(0)
+	opt := m.getTxOptions(0)
 
 	// TODO: check that address is not already validator
 
@@ -82,7 +79,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.client, tx)
 	if err != nil {
 		return err
 	}
@@ -92,7 +89,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 
 // RemoveValidator removes an address from the validator map in the StreamManager smart contract.
 func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
-	opt := m.caller.getTxOptions(0)
+	opt := m.getTxOptions(0)
 
 	addr := common.HexToAddress(address)
 
@@ -101,7 +98,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.client, tx)
 	if err != nil {
 		return err
 	}
@@ -111,7 +108,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 
 // ApproveStreamCreation approves a user`s stream request.
 func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big.Int, chunks []*big.Int) error {
-	opt := m.caller.getTxOptions(0)
+	opt := m.getTxOptions(0)
 
 	// TODO: add checks so we can return informative errors when needed
 
@@ -120,7 +117,7 @@ func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.client, tx)
 	if err != nil {
 		return err
 	}
@@ -135,7 +132,7 @@ func (m *ManagerClient) AddInputChunk() {
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.
 func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
-	opt := m.caller.getTxOptions(0)
+	opt := m.getTxOptions(0)
 
 	// TODO: add checks so we can return informative errors when needed
 
@@ -144,7 +141,7 @@ func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) erro
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, m.caller.client, tx)
+	_, err = bind.WaitMined(ctx, m.client, tx)
 	if err != nil {
 		return err
 	}
