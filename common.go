@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"math/big"
 
+	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/accounts/keystore"
 	"github.com/VideoCoin/go-videocoin/ethclient"
@@ -14,6 +15,11 @@ type account interface {
 	loadAccount(path string, pwd string) error
 	getTxOptions(gasLimit int) *bind.TransactOpts
 	GetAccountBalance() error
+}
+
+// ManagerContract wraps the manager smart contract & some of its methods
+type ManagerContract struct {
+	instance *streamManager.StreamManager
 }
 
 // Caller defines methods and properties required for account loading.

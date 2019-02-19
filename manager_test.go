@@ -81,7 +81,7 @@ func TestApproveStreamCreation(t *testing.T) {
 	}
 }
 
-func TestAllowRefund(t *testing.T) {
+func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	streamId := big.NewInt(int64(getRandInt()))
 
 	err := createNewStream(streamId)
