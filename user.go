@@ -38,7 +38,7 @@ func NewUserClient(url string, addr string, keyfilePath string, pwd string) (*Us
 		return nil, err
 	}
 
-	contract := ManagerContract{instance}
+	contract := ManagerContract{instance, managerAddress}
 
 	u := &UserClient{contract, caller}
 

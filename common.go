@@ -8,6 +8,7 @@ import (
 	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/accounts/keystore"
+	"github.com/VideoCoin/go-videocoin/common"
 	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
@@ -20,6 +21,12 @@ type account interface {
 // ManagerContract wraps the manager smart contract & some of its methods
 type ManagerContract struct {
 	instance *streamManager.StreamManager
+	addr     common.Address
+}
+
+// GetManagerContractAddr returns manager smart contract address
+func (m *ManagerContract) GetManagerContractAddr() common.Address {
+	return m.addr
 }
 
 // Caller defines methods and properties required for account loading.

@@ -15,17 +15,11 @@ import (
 type ManagerClient struct {
 	ManagerContract
 	Caller
-	addr common.Address
 }
 
 // GetManagerAccAddr returns manager account address
 func (m *ManagerClient) GetManagerAccAddr() common.Address {
 	return m.key.Address
-}
-
-// GetManagerContractAddr returns manager smart contract address
-func (m *ManagerClient) GetManagerContractAddr() common.Address {
-	return m.addr
 }
 
 // NewManagerClient creates a ManagerClient instance
@@ -48,9 +42,9 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 		return nil, err
 	}
 
-	contract := ManagerContract{instance}
+	contract := ManagerContract{instance, managerAddress}
 
-	m := &ManagerClient{contract, caller, managerAddress}
+	m := &ManagerClient{contract, caller}
 
 	isOwner, err := m.instance.IsOwner(&bind.CallOpts{From: m.key.Address})
 	if err != nil {
