@@ -55,7 +55,7 @@ func TestRemoveValidator(t *testing.T) {
 func TestApproveStreamCreation(t *testing.T) {
 	bitrates := []*big.Int{big.NewInt(1)}
 	bitrates = append(bitrates, big.NewInt(1))
-	streamId := big.NewInt(int64(rand.Int()))
+	streamId := big.NewInt(int64(getRandInt()))
 	RTMP := randStringRunes(10)
 
 	m, err := getManagerClient()
@@ -82,7 +82,7 @@ func TestApproveStreamCreation(t *testing.T) {
 }
 
 func TestAllowRefund(t *testing.T) {
-	streamId := big.NewInt(int64(rand.Int()))
+	streamId := big.NewInt(int64(getRandInt()))
 
 	err := createNewStream(streamId)
 	if err != nil {
@@ -97,6 +97,16 @@ func TestAllowRefund(t *testing.T) {
 	err = m.AllowRefund(context.Background(), streamId)
 	if err != nil {
 		t.Errorf("Failed to allow refund: %s", err.Error())
+	}
+
+	u, err := getUserClient()
+	if err != nil {
+		t.Errorf("Failed to get user client: %s", err.Error())
+	}
+
+	err = u.ClaimRefund(context.Background(), streamId)
+	if err != nil {
+		t.Errorf("Failed to get refund: %s", err.Error())
 	}
 }
 
@@ -119,7 +129,7 @@ func randAddress() string {
 }
 
 func randStringRunes(n int) string {
-
+	rand.Seed(time.Now().UnixNano())
 	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 	b := make([]rune, n)
@@ -192,4 +202,9 @@ func createNewStream(streamID *big.Int) error {
 	}
 
 	return nil
+}
+
+func getRandInt() int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Int()
 }

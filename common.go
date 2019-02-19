@@ -12,7 +12,7 @@ import (
 
 type account interface {
 	loadAccount(path string, pwd string) error
-	getTxOptions() *bind.TransactOpts
+	getTxOptions(gasLimit int) *bind.TransactOpts
 	GetAccountBalance() error
 }
 
@@ -38,8 +38,11 @@ func (c *Caller) loadAccount(path string, pwd string) error {
 	return nil
 }
 
-func (c *Caller) getTxOptions() *bind.TransactOpts {
+func (c *Caller) getTxOptions(gasLimit int) *bind.TransactOpts {
 	opts := bind.NewKeyedTransactor(c.key.PrivateKey)
+	if gasLimit == 0 {
+		opts.GasLimit = uint64(3000000)
+	}
 
 	return opts
 }

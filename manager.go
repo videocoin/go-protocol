@@ -71,7 +71,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 
 // AddValidator adds a new address to the validator map in the StreamManager smart contract.
 func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
-	opt := m.caller.getTxOptions()
+	opt := m.caller.getTxOptions(0)
 
 	// TODO: check that address is not already validator
 
@@ -92,7 +92,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 
 // RemoveValidator removes an address from the validator map in the StreamManager smart contract.
 func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
-	opt := m.caller.getTxOptions()
+	opt := m.caller.getTxOptions(0)
 
 	addr := common.HexToAddress(address)
 
@@ -111,7 +111,7 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 
 // ApproveStreamCreation approves a user`s stream request.
 func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big.Int, chunks []*big.Int) error {
-	opt := m.caller.getTxOptions()
+	opt := m.caller.getTxOptions(0)
 
 	// TODO: add checks so we can return informative errors when needed
 
@@ -135,7 +135,7 @@ func (m *ManagerClient) AddInputChunk() {
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.
 func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
-	opt := m.caller.getTxOptions()
+	opt := m.caller.getTxOptions(0)
 
 	// TODO: add checks so we can return informative errors when needed
 

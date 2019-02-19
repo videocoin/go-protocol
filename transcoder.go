@@ -47,7 +47,7 @@ func NewTranscoderClient(url string, addr string, keyfilePath string, pwd string
 
 // SubmitProof sends
 func (t *TranscoderClient) SubmitProof(ctx context.Context, bitrate *big.Int, inputChunkID *big.Int, outputChunkID *big.Int) error {
-	opt := t.caller.getTxOptions()
+	opt := t.caller.getTxOptions(0)
 	proof := big.NewInt(0)
 
 	// TODO: add checks
