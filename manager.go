@@ -53,7 +53,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 
 	if !isOwner {
 		owner, err := m.instance.Owner(&bind.CallOpts{})
-		err = fmt.Errorf("Account provided %s, is not owner. Real owner is: %s ", m.key.Address.String(), owner.String())
+		err = fmt.Errorf("Account provided %s, is not manager. Real manager is: %s ", m.key.Address.String(), owner.String())
 		return nil, err
 	}
 
@@ -120,8 +120,29 @@ func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big
 }
 
 // AddInputChunk will add input chunk ids to the stream contract
-func (m *ManagerClient) AddInputChunk() {
+func (m *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, chunkID *big.Int) error {
 
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return err
+	}
+
+	if req.Stream.Big().Cmp(big.NewInt(0)) == 0 {
+		return fmt.Errorf("refund for string ID: %s is not allowed", streamID.String())
+	}
+
+	opt := m.getTxOptions(0)
+	tx, err := m.instance.AddInputChunkId(opt, streamID, chunkID)
+	if err != nil {
+		return err
+	}
+
+	_, err = bind.WaitMined(ctx, m.client, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.

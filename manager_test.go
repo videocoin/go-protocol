@@ -110,6 +110,25 @@ func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	}
 }
 
+func TestAddInputChunk(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+
+	err := createNewStream(streamId)
+	if err != nil {
+		t.Errorf("Failed to create a new stream: %s", err.Error())
+	}
+
+	m, err := getManagerClient()
+	if err != nil {
+		t.Errorf("Failed to get manager client: %s", err.Error())
+	}
+
+	err = m.AddInputChunk(context.Background(), streamId, streamId)
+	if err != nil {
+		t.Errorf("Failed to add input chunk: %s", err.Error())
+	}
+}
+
 // utils
 var manager *protocol.ManagerClient = nil
 var user *protocol.UserClient = nil
