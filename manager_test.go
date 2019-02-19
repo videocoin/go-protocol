@@ -35,6 +35,22 @@ func TestAddValidator(t *testing.T) {
 	}
 }
 
+func TestAddValidator2(t *testing.T) {
+	m, err := getManagerClient()
+
+	validator := randAddress()
+
+	err = m.AddValidator(context.Background(), validator)
+	if err != nil {
+		t.Errorf("Failed to add validator: %s", err.Error())
+	}
+
+	err = m.AddValidator(context.Background(), validator)
+	if err == nil {
+		t.Errorf("Was expecting error")
+	}
+}
+
 func TestRemoveValidator(t *testing.T) {
 	m, err := getManagerClient()
 
@@ -49,7 +65,17 @@ func TestRemoveValidator(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to remove validator: %s", err.Error())
 	}
+}
 
+func TestRemoveValidator2(t *testing.T) {
+	m, err := getManagerClient()
+
+	addr := randAddress()
+
+	err = m.RemoveValidator(context.Background(), addr)
+	if err == nil {
+		t.Errorf("Was expecting error")
+	}
 }
 
 func TestApproveStreamCreation(t *testing.T) {
@@ -81,6 +107,21 @@ func TestApproveStreamCreation(t *testing.T) {
 	}
 }
 
+func TestApproveStreamCreation2(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+	chunks := []*big.Int{}
+
+	m, err := getManagerClient()
+	if err != nil {
+		t.Errorf("Failed to get manager client: %s", err.Error())
+	}
+
+	err = m.ApproveStreamCreation(context.Background(), streamId, chunks)
+	if err == nil {
+		t.Errorf("Was expecting error")
+	}
+}
+
 func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	streamId := big.NewInt(int64(getRandInt()))
 
@@ -107,6 +148,44 @@ func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	err = u.ClaimRefund(context.Background(), streamId)
 	if err != nil {
 		t.Errorf("Failed to get refund: %s", err.Error())
+	}
+}
+
+func TestAllowRefund2(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+
+	m, err := getManagerClient()
+	if err != nil {
+		t.Errorf("Failed to get manager client: %s", err.Error())
+	}
+
+	err = m.AllowRefund(context.Background(), streamId)
+	if err == nil {
+		t.Errorf("Was expecting error")
+	}
+}
+
+func TestAllowRefund3(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+
+	err := createNewStream(streamId)
+	if err != nil {
+		t.Errorf("Failed to create a new stream: %s", err.Error())
+	}
+
+	m, err := getManagerClient()
+	if err != nil {
+		t.Errorf("Failed to get manager client: %s", err.Error())
+	}
+
+	err = m.AllowRefund(context.Background(), streamId)
+	if err != nil {
+		t.Errorf("Failed to allow refund: %s", err.Error())
+	}
+
+	err = m.AllowRefund(context.Background(), streamId)
+	if err == nil {
+		t.Errorf("Was expecting error")
 	}
 }
 

@@ -60,14 +60,19 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 	return m, nil
 }
 
-// AddValidator adds a new address to the validator map in the StreamManager smart contract.
+// AddValidator adds a new address to the validator list held by the StreamManager smart contract.
 func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
-	opt := m.getTxOptions(0)
-
-	// TODO: check that address is not already validator
-
 	addr := common.HexToAddress(address)
+	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
+	if err != nil {
+		return err
+	}
 
+	if isValidator {
+		return fmt.Errorf("address: %s is already a validator", address)
+	}
+
+	opt := m.getTxOptions(0)
 	tx, err := m.instance.AddValidator(opt, addr)
 	if err != nil {
 		return err
@@ -81,12 +86,19 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 	return nil
 }
 
-// RemoveValidator removes an address from the validator map in the StreamManager smart contract.
+// RemoveValidator removes an address from the validator list held by the StreamManager smart contract.
 func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
-	opt := m.getTxOptions(0)
-
 	addr := common.HexToAddress(address)
+	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
+	if err != nil {
+		return err
+	}
 
+	if !isValidator {
+		return fmt.Errorf("address: %s is not a validator", address)
+	}
+
+	opt := m.getTxOptions(0)
 	tx, err := m.instance.RemoveValidator(opt, addr)
 	if err != nil {
 		return err
@@ -102,10 +114,16 @@ func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) err
 
 // ApproveStreamCreation approves a user`s stream request.
 func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big.Int, chunks []*big.Int) error {
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return err
+	}
+
+	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
+		return fmt.Errorf("stream request ID: %s does not exist", streamID.String())
+	}
+
 	opt := m.getTxOptions(0)
-
-	// TODO: add checks so we can return informative errors when needed
-
 	tx, err := m.instance.ApproveStreamCreation(opt, streamID, chunks)
 	if err != nil {
 		return err
@@ -121,7 +139,6 @@ func (m *ManagerClient) ApproveStreamCreation(ctx context.Context, streamID *big
 
 // AddInputChunk will add input chunk ids to the stream contract
 func (m *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, chunkID *big.Int) error {
-
 	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
 	if err != nil {
 		return err
@@ -147,10 +164,20 @@ func (m *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, ch
 
 // AllowRefund will allow the client to refund the escrow for the given stream id.
 func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return err
+	}
+
+	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
+		return fmt.Errorf("stream request ID: %s does not exist", streamID.String())
+	}
+
+	if req.Refund {
+		return fmt.Errorf("refund for string ID: %s already allowed", streamID.String())
+	}
+
 	opt := m.getTxOptions(0)
-
-	// TODO: add checks so we can return informative errors when needed
-
 	tx, err := m.instance.AllowRefund(opt, streamID)
 	if err != nil {
 		return err
