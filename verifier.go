@@ -38,7 +38,7 @@ func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) 
 		return nil, err
 	}
 
-	contract := ManagerContract{instance, streamAddress}
+	contract := ManagerContract{instance, streamAddress, make(map[string]*StreamContract)}
 
 	isVerifier, err := contract.IsValidator(streamAddress)
 	if err != nil {
@@ -48,8 +48,6 @@ func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) 
 	if !isVerifier {
 		return nil, fmt.Errorf("cant create verifier. address: %s is not a validator", addr)
 	}
-
-	// get all streams
 
 	t := &VerifierClient{contract, caller}
 

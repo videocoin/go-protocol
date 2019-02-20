@@ -25,6 +25,7 @@ type account interface {
 type ManagerContract struct {
 	instance *streamManager.StreamManager
 	common.Address
+	streams map[string]*StreamContract
 }
 
 // IsValidator returns true if address is registerred as validator
@@ -39,6 +40,12 @@ func (m *ManagerContract) IsValidator(addr common.Address) (bool, error) {
 
 // GetStreamContract returns a StreamContract instance for the given stream id.
 func (m *ManagerContract) GetStreamContract(streamID *big.Int, client *ethclient.Client) (*StreamContract, error) {
+	key := streamID.String()
+
+	if val, ok := m.streams[key]; ok {
+		return val, nil
+	}
+
 	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
 	if err != nil {
 		return nil, err
