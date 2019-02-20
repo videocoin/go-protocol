@@ -157,7 +157,7 @@ func (m *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, ch
 	return nil
 }
 
-// AllowRefund will allow the client to refund the escrow for the given stream id.
+// AllowRefund will give the client permission to refund the escrow for the given stream id.
 func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
 	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
 	if err != nil {
@@ -184,4 +184,40 @@ func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) erro
 	}
 
 	return nil
+}
+
+// RevokeRefund will revoke the client permission to refund the escrow for the given stream id.
+func (m *ManagerClient) RevokeRefund(ctx context.Context, streamID *big.Int) error {
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return err
+	}
+
+	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
+		return fmt.Errorf("stream request ID: %s does not exist", streamID.String())
+	}
+
+	opt := m.getTxOptions(0)
+	tx, err := m.instance.RevokeRefund(opt, streamID)
+	if err != nil {
+		return err
+	}
+
+	_, err = bind.WaitMined(ctx, m.client, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// RefundAllowed queries whether a refund is allowed for the given stream id.
+func (m *ManagerClient) RefundAllowed(ctx context.Context, streamID *big.Int) (bool, error) {
+
+	isAllowed, err := m.instance.RefundAllowed(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return false, err
+	}
+
+	return isAllowed, nil
 }

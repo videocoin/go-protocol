@@ -140,6 +140,15 @@ func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 		t.Errorf("Failed to allow refund: %s", err.Error())
 	}
 
+	isAllowed, err := m.RefundAllowed(context.Background(), streamId)
+	if err != nil {
+		t.Errorf("Failed to allow refund: %s", err.Error())
+	}
+
+	if !isAllowed {
+		t.Errorf("Failed to allow refund: %s", err.Error())
+	}
+
 	u, err := getUserClient()
 	if err != nil {
 		t.Errorf("Failed to get user client: %s", err.Error())
