@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"math/big"
 
+	"github.com/VideoCoin/go-protocol/abis/stream"
 	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/accounts/keystore"
@@ -24,8 +25,8 @@ type ManagerContract struct {
 	addr     common.Address
 }
 
-// GetManagerContractAddr returns manager smart contract address
-func (m *ManagerContract) GetManagerContractAddr() common.Address {
+// GetContractAddr returns manager smart contract address
+func (m *ManagerContract) GetContractAddr() common.Address {
 	return m.addr
 }
 
@@ -33,6 +34,17 @@ func (m *ManagerContract) GetManagerContractAddr() common.Address {
 type Caller struct {
 	client *ethclient.Client
 	key    *keystore.Key
+}
+
+// StreamContract wraps a stream smart contract & some of its methods
+type StreamContract struct {
+	instance *stream.Stream
+	addr     common.Address
+}
+
+// GetContractAddr returns manager smart contract address
+func (s *StreamContract) GetContractAddr() common.Address {
+	return s.addr
 }
 
 // GetCallerAddr returns manager smart contract address

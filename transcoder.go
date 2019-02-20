@@ -12,8 +12,8 @@ import (
 
 // TranscoderClient is a wrapper for the transcoder calls.
 type TranscoderClient struct {
-	instance *stream.Stream
-	caller   Caller
+	StreamContract
+	Caller
 }
 
 // NewTranscoderClient creates a TranscoderClient instance
@@ -37,17 +37,16 @@ func NewTranscoderClient(url string, addr string, keyfilePath string, pwd string
 		return nil, err
 	}
 
-	t := &TranscoderClient{
-		instance: instance,
-		caller:   caller,
-	}
+	contract := StreamContract{instance, streamAddress}
+
+	t := &TranscoderClient{contract, caller}
 
 	return t, nil
 }
 
 // SubmitProof sends
 func (t *TranscoderClient) SubmitProof(ctx context.Context, bitrate *big.Int, inputChunkID *big.Int, outputChunkID *big.Int) error {
-	opt := t.caller.getTxOptions(0)
+	opt := t.getTxOptions(0)
 	proof := big.NewInt(0)
 
 	// TODO: add checks
@@ -57,7 +56,7 @@ func (t *TranscoderClient) SubmitProof(ctx context.Context, bitrate *big.Int, in
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, t.caller.client, tx)
+	_, err = bind.WaitMined(ctx, t.client, tx)
 	if err != nil {
 		return err
 	}
