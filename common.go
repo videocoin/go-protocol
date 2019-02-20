@@ -3,6 +3,7 @@ package protocol
 import (
 	"context"
 	"io/ioutil"
+	"log"
 	"math/big"
 
 	"github.com/VideoCoin/go-protocol/abis/stream"
@@ -33,6 +34,27 @@ func (m *ManagerContract) IsValidator() (bool, error) {
 	}
 
 	return isValidator, nil
+}
+
+// GetStreams returns a list of all streams registered with the manager.
+func (m *ManagerContract) GetStreams(fromBlock uint64) error {
+	opts := bind.FilterOpts{
+		Start: fromBlock,
+	}
+
+	iterator, err := m.instance.FilterStreamRequested(&opts, nil, nil)
+	if err != nil {
+		return err
+	}
+
+	defer iterator.Close()
+
+	for iterator.Next() {
+		event := iterator.Event
+		log.Print("Clients requesting stream: " + event.Client.String())
+	}
+
+	return nil
 }
 
 // StreamContract wraps a stream smart contract & some of its methods
