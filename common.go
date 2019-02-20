@@ -25,13 +25,23 @@ type ManagerContract struct {
 	common.Address
 }
 
+// IsValidator returns true if address is registerred as validator
+func (m *ManagerContract) IsValidator() (bool, error) {
+	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, m.Address)
+	if err != nil {
+		return false, err
+	}
+
+	return isValidator, nil
+}
+
 // StreamContract wraps a stream smart contract & some of its methods
 type StreamContract struct {
 	instance *stream.Stream
 	common.Address
 }
 
-// Caller defines methods and properties required for account loading.
+// Caller implements methods and properties required for account loading.
 type Caller struct {
 	client *ethclient.Client
 	key    *keystore.Key

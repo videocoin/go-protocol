@@ -58,7 +58,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 // AddValidator adds a new address to the validator list held by the StreamManager smart contract.
 func (m *ManagerClient) AddValidator(ctx context.Context, address string) error {
 	addr := common.HexToAddress(address)
-	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
+	isValidator, err := m.IsValidator()
 	if err != nil {
 		return err
 	}
@@ -84,7 +84,7 @@ func (m *ManagerClient) AddValidator(ctx context.Context, address string) error 
 // RemoveValidator removes an address from the validator list held by the StreamManager smart contract.
 func (m *ManagerClient) RemoveValidator(ctx context.Context, address string) error {
 	addr := common.HexToAddress(address)
-	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
+	isValidator, err := m.IsValidator()
 	if err != nil {
 		return err
 	}
