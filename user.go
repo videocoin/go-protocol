@@ -6,10 +6,7 @@ import (
 	"math/big"
 
 	"github.com/VideoCoin/go-protocol/abis/stream"
-	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
-	"github.com/VideoCoin/go-videocoin/common"
-	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
 // UserClient is a wrapper for the User calls.
@@ -20,27 +17,12 @@ type UserClient struct {
 
 // NewUserClient creates a UserClient instance
 func NewUserClient(url string, addr string, keyfilePath string, pwd string) (*UserClient, error) {
-	managerAddress := common.HexToAddress(addr)
-
-	client, err := ethclient.Dial(url)
+	contract, caller, err := NewManagerContract(url, addr, keyfilePath, pwd)
 	if err != nil {
 		return nil, err
 	}
 
-	caller := Caller{client: client}
-	err = caller.loadAccount(keyfilePath, pwd)
-	if err != nil {
-		return nil, err
-	}
-
-	instance, err := streamManager.NewStreamManager(managerAddress, client)
-	if err != nil {
-		return nil, err
-	}
-
-	contract := ManagerContract{instance, managerAddress, make(map[string]*StreamContract)}
-
-	u := &UserClient{contract, caller}
+	u := &UserClient{*contract, *caller}
 
 	return u, nil
 }

@@ -5,10 +5,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/common"
-	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
 // ManagerClient is a wrapper for the stream manager calls.
@@ -19,27 +17,12 @@ type ManagerClient struct {
 
 // NewManagerClient creates a ManagerClient instance
 func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (*ManagerClient, error) {
-	managerAddress := common.HexToAddress(addr)
-
-	client, err := ethclient.Dial(url)
+	contract, caller, err := NewManagerContract(url, addr, keyfilePath, pwd)
 	if err != nil {
 		return nil, err
 	}
 
-	caller := Caller{client: client}
-	err = caller.loadAccount(keyfilePath, pwd)
-	if err != nil {
-		return nil, err
-	}
-
-	instance, err := streamManager.NewStreamManager(managerAddress, client)
-	if err != nil {
-		return nil, err
-	}
-
-	contract := ManagerContract{instance, managerAddress, make(map[string]*StreamContract)}
-
-	m := &ManagerClient{contract, caller}
+	m := &ManagerClient{*contract, *caller}
 
 	isOwner, err := m.instance.IsOwner(&bind.CallOpts{From: m.key.Address})
 	if err != nil {

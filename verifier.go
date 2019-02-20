@@ -5,10 +5,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
-	"github.com/VideoCoin/go-videocoin/common"
-	"github.com/VideoCoin/go-videocoin/ethclient"
 )
 
 // VerifierClient is a wrapper for the transcoder calls.
@@ -19,37 +16,21 @@ type VerifierClient struct {
 
 // NewVerifierClient creates a VerifierClient instance
 func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) (*VerifierClient, error) {
-	streamAddress := common.HexToAddress(addr)
-
-	client, err := ethclient.Dial(url)
+	contract, caller, err := NewManagerContract(url, addr, keyfilePath, pwd)
 	if err != nil {
 		return nil, err
 	}
 
-	caller := Caller{client: client}
+	t := &VerifierClient{*contract, *caller}
 
-	err = caller.loadAccount(keyfilePath, pwd)
-	if err != nil {
-		return nil, err
-	}
-
-	instance, err := streamManager.NewStreamManager(streamAddress, client)
-	if err != nil {
-		return nil, err
-	}
-
-	contract := ManagerContract{instance, streamAddress, make(map[string]*StreamContract)}
-
-	isVerifier, err := contract.IsValidator(streamAddress)
+	isVerifier, err := t.IsValidator(t.key.Address)
 	if err != nil {
 		return nil, err
 	}
 
 	if !isVerifier {
-		return nil, fmt.Errorf("cant create verifier. address: %s is not a validator", addr)
+		return nil, fmt.Errorf("can`t create verifier. address: %s is not a validator", addr)
 	}
-
-	t := &VerifierClient{contract, caller}
 
 	return t, nil
 }

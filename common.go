@@ -28,6 +28,31 @@ type ManagerContract struct {
 	streams map[string]*StreamContract
 }
 
+// NewManagerContract creates a ManagerContract
+func NewManagerContract(url string, addr string, keyfilePath string, pwd string) (*ManagerContract, *Caller, error) {
+	managerAddress := common.HexToAddress(addr)
+
+	client, err := ethclient.Dial(url)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	caller := &Caller{client: client}
+	err = caller.loadAccount(keyfilePath, pwd)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	instance, err := streamManager.NewStreamManager(managerAddress, client)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	contract := &ManagerContract{instance, managerAddress, make(map[string]*StreamContract)}
+
+	return contract, caller, nil
+}
+
 // IsValidator returns true if address is registerred as validator
 func (m *ManagerContract) IsValidator(addr common.Address) (bool, error) {
 	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
