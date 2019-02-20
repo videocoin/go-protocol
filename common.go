@@ -22,29 +22,19 @@ type account interface {
 // ManagerContract wraps the manager smart contract & some of its methods
 type ManagerContract struct {
 	instance *streamManager.StreamManager
-	addr     common.Address
+	common.Address
 }
 
-// GetContractAddr returns manager smart contract address
-func (m *ManagerContract) GetContractAddr() common.Address {
-	return m.addr
+// StreamContract wraps a stream smart contract & some of its methods
+type StreamContract struct {
+	instance *stream.Stream
+	common.Address
 }
 
 // Caller defines methods and properties required for account loading.
 type Caller struct {
 	client *ethclient.Client
 	key    *keystore.Key
-}
-
-// StreamContract wraps a stream smart contract & some of its methods
-type StreamContract struct {
-	instance *stream.Stream
-	addr     common.Address
-}
-
-// GetContractAddr returns manager smart contract address
-func (s *StreamContract) GetContractAddr() common.Address {
-	return s.addr
 }
 
 // GetCallerAddr returns manager smart contract address
