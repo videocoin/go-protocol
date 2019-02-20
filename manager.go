@@ -37,7 +37,7 @@ func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (
 		return nil, err
 	}
 
-	contract := ManagerContract{instance, managerAddress}
+	contract := ManagerContract{instance, managerAddress, make(map[string]*StreamContract)}
 
 	m := &ManagerClient{contract, caller}
 

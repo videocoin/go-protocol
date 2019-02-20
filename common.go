@@ -63,6 +63,8 @@ func (m *ManagerContract) GetStreamContract(streamID *big.Int, client *ethclient
 
 	contract := &StreamContract{instance, streamAddress}
 
+	m.streams[key] = contract
+
 	return contract, nil
 }
 
