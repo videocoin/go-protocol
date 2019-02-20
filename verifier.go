@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/VideoCoin/go-protocol/abis/stream"
 	"github.com/VideoCoin/go-protocol/abis/streamManager"
 	"github.com/VideoCoin/go-videocoin/accounts/abi/bind"
 	"github.com/VideoCoin/go-videocoin/common"
@@ -59,27 +58,15 @@ func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) 
 
 // ValidateProof ...
 func (v *VerifierClient) ValidateProof(ctx context.Context, streamID *big.Int, bitrate *big.Int, inputChunkID *big.Int) error {
-	req, err := v.instance.Requests(&bind.CallOpts{}, streamID)
+	stream, err := v.GetStreamContract(streamID, v.client)
 	if err != nil {
 		return err
 	}
 
-	streamAddress := req.Stream
-	if streamAddress.Big().Cmp(big.NewInt(0)) == 0 {
-		return fmt.Errorf("stream ID: %s does not exist", streamID.String())
-	}
-
-	instance, err := stream.NewStream(streamAddress, v.client)
-	if err != nil {
-		return fmt.Errorf("could not create stream instance")
-	}
-
-	contract := StreamContract{instance, streamAddress}
-
 	// TODO: add checks
 
 	opt := v.getTxOptions(0)
-	tx, err := contract.instance.ValidateProof(opt, bitrate, inputChunkID)
+	tx, err := stream.instance.ValidateProof(opt, bitrate, inputChunkID)
 	if err != nil {
 		return err
 	}

@@ -2,6 +2,7 @@ package protocol
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"math/big"
@@ -34,6 +35,28 @@ func (m *ManagerContract) IsValidator(addr common.Address) (bool, error) {
 	}
 
 	return isValidator, nil
+}
+
+// GetStreamContract returns a StreamContract instance for the given stream id.
+func (m *ManagerContract) GetStreamContract(streamID *big.Int, client *ethclient.Client) (*StreamContract, error) {
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return nil, err
+	}
+
+	streamAddress := req.Stream
+	if streamAddress.Big().Cmp(big.NewInt(0)) == 0 {
+		return nil, fmt.Errorf("stream ID: %s does not exist", streamID.String())
+	}
+
+	instance, err := stream.NewStream(streamAddress, client)
+	if err != nil {
+		return nil, fmt.Errorf("could not create stream instance")
+	}
+
+	contract := &StreamContract{instance, streamAddress}
+
+	return contract, nil
 }
 
 // GetStreams returns a list of all streams registered with the manager.
