@@ -140,8 +140,10 @@ func (m *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, ch
 	}
 
 	if req.Stream.Big().Cmp(big.NewInt(0)) == 0 {
-		return fmt.Errorf("refund for string ID: %s is not allowed", streamID.String())
+		return fmt.Errorf("stream ID: %s does not exist", streamID.String())
 	}
+
+	// add check for already existing input chunkid
 
 	opt := m.getTxOptions(0)
 	tx, err := m.instance.AddInputChunkId(opt, streamID, chunkID)
@@ -165,11 +167,11 @@ func (m *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) erro
 	}
 
 	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
-		return fmt.Errorf("stream request ID: %s does not exist", streamID.String())
+		return fmt.Errorf("stream ID: %s does not exist", streamID.String())
 	}
 
 	if req.Refund {
-		return fmt.Errorf("refund for string ID: %s already allowed", streamID.String())
+		return fmt.Errorf("refund for stream ID: %s already allowed", streamID.String())
 	}
 
 	opt := m.getTxOptions(0)
@@ -194,7 +196,7 @@ func (m *ManagerClient) RevokeRefund(ctx context.Context, streamID *big.Int) err
 	}
 
 	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
-		return fmt.Errorf("stream request ID: %s does not exist", streamID.String())
+		return fmt.Errorf("stream ID: %s does not exist", streamID.String())
 	}
 
 	opt := m.getTxOptions(0)
