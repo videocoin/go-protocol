@@ -8,31 +8,27 @@ import (
 	"time"
 
 	protocol "github.com/VideoCoin/go-protocol"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCtor(t *testing.T) {
 	_, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to create manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to create manager client")
 }
 
 func TestCtor2(t *testing.T) {
 	keyfilePath := "./testdata/local/user"
 	pwd := "user"
+
 	_, err := protocol.NewManagerClient(ganache, managerAddr, keyfilePath, pwd)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestAddValidator(t *testing.T) {
 	m, err := getManagerClient()
 
 	err = m.AddValidator(context.Background(), randAddress())
-	if err != nil {
-		t.Errorf("Failed to add validator: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to add validator")
 }
 
 func TestAddValidator2(t *testing.T) {
@@ -41,14 +37,10 @@ func TestAddValidator2(t *testing.T) {
 	validator := randAddress()
 
 	err = m.AddValidator(context.Background(), validator)
-	if err != nil {
-		t.Errorf("Failed to add validator: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to add validator")
 
 	err = m.AddValidator(context.Background(), validator)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestRemoveValidator(t *testing.T) {
@@ -57,14 +49,10 @@ func TestRemoveValidator(t *testing.T) {
 	addr := randAddress()
 
 	err = m.AddValidator(context.Background(), addr)
-	if err != nil {
-		t.Errorf("Failed to add validator: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to add validator")
 
 	err = m.RemoveValidator(context.Background(), addr)
-	if err != nil {
-		t.Errorf("Failed to remove validator: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to remove validator")
 }
 
 func TestRemoveValidator2(t *testing.T) {
@@ -73,9 +61,7 @@ func TestRemoveValidator2(t *testing.T) {
 	addr := randAddress()
 
 	err = m.RemoveValidator(context.Background(), addr)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestApproveStreamCreation(t *testing.T) {
@@ -85,26 +71,17 @@ func TestApproveStreamCreation(t *testing.T) {
 	RTMP := randStringRunes(10)
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	u, err := getUserClient()
-	if err != nil {
-		t.Errorf("Failed to get user client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get user client")
 
 	err = u.RequestStream(context.Background(), streamId, RTMP, bitrates)
-	if err != nil {
-		t.Errorf("Failed to request a stream: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to request a stream")
 
 	chunks := []*big.Int{}
-
 	err = m.ApproveStreamCreation(context.Background(), streamId, chunks)
-	if err != nil {
-		t.Errorf("Failed to approve a stream: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to approve a stream")
 }
 
 func TestApproveStreamCreation2(t *testing.T) {
@@ -112,109 +89,72 @@ func TestApproveStreamCreation2(t *testing.T) {
 	chunks := []*big.Int{}
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	err = m.ApproveStreamCreation(context.Background(), streamId, chunks)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	streamId := big.NewInt(int64(getRandInt()))
 
 	err := createNewStream(streamId)
-	if err != nil {
-		t.Errorf("Failed to create a new stream: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to create a new stream")
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	err = m.AllowRefund(context.Background(), streamId)
-	if err != nil {
-		t.Errorf("Failed to allow refund: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to allow refund")
 
 	isAllowed, err := m.RefundAllowed(context.Background(), streamId)
-	if err != nil {
-		t.Errorf("Failed to allow refund: %s", err.Error())
-	}
-
-	if !isAllowed {
-		t.Errorf("Failed to allow refund: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to allow refund")
+	assert.True(t, isAllowed, "Failed to allow refund")
 
 	u, err := getUserClient()
-	if err != nil {
-		t.Errorf("Failed to get user client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get user client")
 
 	err = u.ClaimRefund(context.Background(), streamId)
-	if err != nil {
-		t.Errorf("Failed to get refund: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get refund")
 }
 
 func TestAllowRefund2(t *testing.T) {
 	streamId := big.NewInt(int64(getRandInt()))
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	err = m.AllowRefund(context.Background(), streamId)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestAllowRefund3(t *testing.T) {
 	streamId := big.NewInt(int64(getRandInt()))
 
 	err := createNewStream(streamId)
-	if err != nil {
-		t.Errorf("Failed to create a new stream: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to create a new stream")
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	err = m.AllowRefund(context.Background(), streamId)
-	if err != nil {
-		t.Errorf("Failed to allow refund: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to allow refund")
 
 	err = m.AllowRefund(context.Background(), streamId)
-	if err == nil {
-		t.Errorf("Was expecting error")
-	}
+	assert.NotNil(t, err, "Was expecting error")
 }
 
 func TestAddInputChunk(t *testing.T) {
 	streamId := big.NewInt(int64(getRandInt()))
 
 	err := createNewStream(streamId)
-	if err != nil {
-		t.Errorf("Failed to create a new stream: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to create a new stream")
 
 	m, err := getManagerClient()
-	if err != nil {
-		t.Errorf("Failed to get manager client: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to get manager client")
 
 	err = m.AddInputChunk(context.Background(), streamId, streamId)
-	if err != nil {
-		t.Errorf("Failed to add input chunk: %s", err.Error())
-	}
+	assert.Nil(t, err, "Failed to add input chunk")
 }
 
 // utils
