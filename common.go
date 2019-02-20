@@ -27,8 +27,8 @@ type ManagerContract struct {
 }
 
 // IsValidator returns true if address is registerred as validator
-func (m *ManagerContract) IsValidator() (bool, error) {
-	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, m.Address)
+func (m *ManagerContract) IsValidator(addr common.Address) (bool, error) {
+	isValidator, err := m.instance.IsValidator(&bind.CallOpts{}, addr)
 	if err != nil {
 		return false, err
 	}

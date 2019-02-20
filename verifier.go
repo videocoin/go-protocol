@@ -41,7 +41,7 @@ func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) 
 
 	contract := ManagerContract{instance, streamAddress}
 
-	isVerifier, err := contract.IsValidator()
+	isVerifier, err := contract.IsValidator(streamAddress)
 	if err != nil {
 		return nil, err
 	}
