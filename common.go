@@ -35,6 +35,11 @@ type Caller struct {
 	key    *keystore.Key
 }
 
+// GetCallerAddr returns manager smart contract address
+func (c *Caller) GetCallerAddr() common.Address {
+	return c.key.Address
+}
+
 func (c *Caller) loadAccount(path string, pwd string) error {
 	keyjson, e := ioutil.ReadFile(path)
 	if e != nil {

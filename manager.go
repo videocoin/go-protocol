@@ -17,11 +17,6 @@ type ManagerClient struct {
 	Caller
 }
 
-// GetManagerAccAddr returns manager account address
-func (m *ManagerClient) GetManagerAccAddr() common.Address {
-	return m.key.Address
-}
-
 // NewManagerClient creates a ManagerClient instance
 func NewManagerClient(url string, addr string, keyfilePath string, pwd string) (*ManagerClient, error) {
 	managerAddress := common.HexToAddress(addr)
