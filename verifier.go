@@ -36,21 +36,21 @@ func NewVerifierClient(url string, addr string, keyfilePath string, pwd string) 
 }
 
 // ValidateProof ...
-func (v *VerifierClient) ValidateProof(ctx context.Context, streamID *big.Int, bitrate *big.Int, inputChunkID *big.Int) error {
-	stream, err := v.GetStreamContract(streamID, v.client)
+func (c *VerifierClient) ValidateProof(ctx context.Context, streamID *big.Int, bitrate *big.Int, inputChunkID *big.Int) error {
+	stream, err := c.GetStreamContract(streamID, c.client)
 	if err != nil {
 		return err
 	}
 
 	// TODO: add checks
 
-	opt := v.getTxOptions(0)
+	opt := c.getTxOptions(0)
 	tx, err := stream.instance.ValidateProof(opt, bitrate, inputChunkID)
 	if err != nil {
 		return err
 	}
 
-	_, err = bind.WaitMined(ctx, v.client, tx)
+	_, err = bind.WaitMined(ctx, c.client, tx)
 	if err != nil {
 		return err
 	}
