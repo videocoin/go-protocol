@@ -108,6 +108,28 @@ func (m *ManagerContract) GetStreams(fromBlock uint64) error {
 	return nil
 }
 
+// RefundAllowed queries whether a refund is allowed for the given stream id.
+func (m *ManagerContract) RefundAllowed(streamID *big.Int) (bool, error) {
+
+	isAllowed, err := m.instance.RefundAllowed(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return false, err
+	}
+
+	return isAllowed, nil
+}
+
+// StreamEnded queries whether a stream has ended.
+func (m *ManagerContract) StreamEnded(streamID *big.Int) (bool, error) {
+
+	req, err := m.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return false, err
+	}
+
+	return req.Ended, nil
+}
+
 // StreamContract wraps a stream smart contract & some of its methods
 type StreamContract struct {
 	instance *stream.Stream

@@ -107,7 +107,7 @@ func TestAllowRefund(t *testing.T) { // & UserClient.ClaimRefund
 	err = m.AllowRefund(context.Background(), streamId)
 	assert.Nil(t, err, "Failed to allow refund")
 
-	isAllowed, err := m.RefundAllowed(context.Background(), streamId)
+	isAllowed, err := m.RefundAllowed(streamId)
 	assert.Nil(t, err, "Failed to allow refund")
 	assert.True(t, isAllowed, "Failed to allow refund")
 
@@ -155,6 +155,41 @@ func TestAddInputChunk(t *testing.T) {
 
 	err = m.AddInputChunk(context.Background(), streamId, streamId)
 	assert.Nil(t, err, "Failed to add input chunk")
+}
+
+func TestEndStream(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+
+	err := createNewStream(streamId)
+	assert.Nil(t, err, "Failed to create a new stream")
+
+	m, err := getManagerClient()
+	assert.Nil(t, err, "Failed to get manager client")
+
+	err = m.EndStream(context.Background(), streamId)
+	assert.Nil(t, err, "Failed to signal stream end")
+
+	ended, err := m.StreamEnded(streamId)
+	assert.Nil(t, err, "query failed")
+	assert.True(t, ended, "Failed to signal stream end")
+}
+
+func TestEndStream2(t *testing.T) {
+	streamId := big.NewInt(int64(getRandInt()))
+
+	m, err := getManagerClient()
+	assert.Nil(t, err, "Failed to get manager client")
+
+	ended, err := m.StreamEnded(streamId)
+	assert.Nil(t, err, "query failed")
+	assert.False(t, ended)
+
+	err = m.EndStream(context.Background(), streamId)
+	assert.NotNil(t, err, "Was expecting error")
+
+	ended, err = m.StreamEnded(streamId)
+	assert.Nil(t, err, "query failed")
+	assert.False(t, ended)
 }
 
 // utils

@@ -142,6 +142,35 @@ func (c *ManagerClient) AddInputChunk(ctx context.Context, streamID *big.Int, ch
 	return nil
 }
 
+// EndStream will signal that the stream has ended & it cant received new input chunks
+func (c *ManagerClient) EndStream(ctx context.Context, streamID *big.Int) error {
+	req, err := c.instance.Requests(&bind.CallOpts{}, streamID)
+	if err != nil {
+		return err
+	}
+
+	if req.Client.Big().Cmp(big.NewInt(0)) == 0 {
+		return fmt.Errorf("stream ID: %s does not exist", streamID.String())
+	}
+
+	if req.Ended {
+		return fmt.Errorf("stream ID: %s already ended", streamID.String())
+	}
+
+	opt := c.getTxOptions(0)
+	tx, err := c.instance.EndStream(opt, streamID)
+	if err != nil {
+		return err
+	}
+
+	_, err = bind.WaitMined(ctx, c.client, tx)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // AllowRefund will give the client permission to refund the escrow for the given stream id.
 func (c *ManagerClient) AllowRefund(ctx context.Context, streamID *big.Int) error {
 	req, err := c.instance.Requests(&bind.CallOpts{}, streamID)
@@ -194,15 +223,4 @@ func (c *ManagerClient) RevokeRefund(ctx context.Context, streamID *big.Int) err
 	}
 
 	return nil
-}
-
-// RefundAllowed queries whether a refund is allowed for the given stream id.
-func (c *ManagerClient) RefundAllowed(ctx context.Context, streamID *big.Int) (bool, error) {
-
-	isAllowed, err := c.instance.RefundAllowed(&bind.CallOpts{}, streamID)
-	if err != nil {
-		return false, err
-	}
-
-	return isAllowed, nil
 }
