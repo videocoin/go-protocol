@@ -28,7 +28,7 @@ var (
 )
 
 // StreamABI is the input ABI used to generate the binding from.
-const StreamABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"client\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getBitrates\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"isChunk\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"},{\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"getProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getCandidateProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"refundAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"manager\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"hasValidProof\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"refund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"}],\"name\":\"getOutChunks\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"addInputChunkId\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getInChunkCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"},{\"name\":\"outChunkId\",\"type\":\"uint256\"}],\"name\":\"submitProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getProofCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"}],\"name\":\"isBitrateReady\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"RTMP\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"scrapProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getValidProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"validator\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"outStreams\",\"outputs\":[{\"name\":\"required\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getInChunks\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"validateProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isStreamReady\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"streamId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"id\",\"type\":\"uint256\"},{\"name\":\"client\",\"type\":\"address\"},{\"name\":\"chunks\",\"type\":\"uint256[]\"},{\"name\":\"bitrates\",\"type\":\"uint256[]\"},{\"name\":\"rtmp\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"ChunkProofSubmited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"ChunkProofValidated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"ChunkProofScrapped\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"Deposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"AccountFunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"OutOfFunds\",\"type\":\"event\"}]"
+const StreamABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"client\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"ended\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getBitrates\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"isChunk\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"},{\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"getProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getCandidateProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"refundAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"manager\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"hasValidProof\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"refund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"}],\"name\":\"getOutChunks\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"addInputChunkId\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getInChunkCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"},{\"name\":\"outChunkId\",\"type\":\"uint256\"}],\"name\":\"submitProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getProofCount\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"}],\"name\":\"isBitrateReady\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"RTMP\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"id\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"endStream\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"scrapProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"getValidProof\",\"outputs\":[{\"name\":\"miner\",\"type\":\"address\"},{\"name\":\"validator\",\"type\":\"address\"},{\"name\":\"outputChunkId\",\"type\":\"uint256\"},{\"name\":\"proof\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"outStreams\",\"outputs\":[{\"name\":\"required\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getInChunks\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"bitrate\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"validateProof\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isStreamReady\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_id\",\"type\":\"uint256\"},{\"name\":\"client\",\"type\":\"address\"},{\"name\":\"chunks\",\"type\":\"uint256[]\"},{\"name\":\"bitrates\",\"type\":\"uint256[]\"},{\"name\":\"rtmp\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"ChunkProofSubmited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"ChunkProofValidated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"bitrate\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"idx\",\"type\":\"uint256\"}],\"name\":\"ChunkProofScrapped\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"Deposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"weiAmount\",\"type\":\"uint256\"}],\"name\":\"AccountFunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"OutOfFunds\",\"type\":\"event\"}]"
 
 // Stream is an auto generated Go binding around an Ethereum contract.
 type Stream struct {
@@ -222,6 +222,32 @@ func (_Stream *StreamSession) Client() (common.Address, error) {
 // Solidity: function client() constant returns(address)
 func (_Stream *StreamCallerSession) Client() (common.Address, error) {
 	return _Stream.Contract.Client(&_Stream.CallOpts)
+}
+
+// Ended is a free data retrieval call binding the contract method 0x12fa6feb.
+//
+// Solidity: function ended() constant returns(bool)
+func (_Stream *StreamCaller) Ended(opts *bind.CallOpts) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _Stream.contract.Call(opts, out, "ended")
+	return *ret0, err
+}
+
+// Ended is a free data retrieval call binding the contract method 0x12fa6feb.
+//
+// Solidity: function ended() constant returns(bool)
+func (_Stream *StreamSession) Ended() (bool, error) {
+	return _Stream.Contract.Ended(&_Stream.CallOpts)
+}
+
+// Ended is a free data retrieval call binding the contract method 0x12fa6feb.
+//
+// Solidity: function ended() constant returns(bool)
+func (_Stream *StreamCallerSession) Ended() (bool, error) {
+	return _Stream.Contract.Ended(&_Stream.CallOpts)
 }
 
 // GetBitrates is a free data retrieval call binding the contract method 0x14cc12d9.
@@ -504,6 +530,32 @@ func (_Stream *StreamCallerSession) HasValidProof(bitrate *big.Int, chunkId *big
 	return _Stream.Contract.HasValidProof(&_Stream.CallOpts, bitrate, chunkId)
 }
 
+// Id is a free data retrieval call binding the contract method 0xaf640d0f.
+//
+// Solidity: function id() constant returns(uint256)
+func (_Stream *StreamCaller) Id(opts *bind.CallOpts) (*big.Int, error) {
+	var (
+		ret0 = new(*big.Int)
+	)
+	out := ret0
+	err := _Stream.contract.Call(opts, out, "id")
+	return *ret0, err
+}
+
+// Id is a free data retrieval call binding the contract method 0xaf640d0f.
+//
+// Solidity: function id() constant returns(uint256)
+func (_Stream *StreamSession) Id() (*big.Int, error) {
+	return _Stream.Contract.Id(&_Stream.CallOpts)
+}
+
+// Id is a free data retrieval call binding the contract method 0xaf640d0f.
+//
+// Solidity: function id() constant returns(uint256)
+func (_Stream *StreamCallerSession) Id() (*big.Int, error) {
+	return _Stream.Contract.Id(&_Stream.CallOpts)
+}
+
 // IsBitrateReady is a free data retrieval call binding the contract method 0x9c2b8a92.
 //
 // Solidity: function isBitrateReady(uint256 bitrate) constant returns(bool)
@@ -660,32 +712,6 @@ func (_Stream *StreamCallerSession) RefundAllowed() (bool, error) {
 	return _Stream.Contract.RefundAllowed(&_Stream.CallOpts)
 }
 
-// StreamId is a free data retrieval call binding the contract method 0xf4408e4b.
-//
-// Solidity: function streamId() constant returns(uint256)
-func (_Stream *StreamCaller) StreamId(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
-	err := _Stream.contract.Call(opts, out, "streamId")
-	return *ret0, err
-}
-
-// StreamId is a free data retrieval call binding the contract method 0xf4408e4b.
-//
-// Solidity: function streamId() constant returns(uint256)
-func (_Stream *StreamSession) StreamId() (*big.Int, error) {
-	return _Stream.Contract.StreamId(&_Stream.CallOpts)
-}
-
-// StreamId is a free data retrieval call binding the contract method 0xf4408e4b.
-//
-// Solidity: function streamId() constant returns(uint256)
-func (_Stream *StreamCallerSession) StreamId() (*big.Int, error) {
-	return _Stream.Contract.StreamId(&_Stream.CallOpts)
-}
-
 // AddInputChunkId is a paid mutator transaction binding the contract method 0x63baa266.
 //
 // Solidity: function addInputChunkId(uint256 chunkId) returns()
@@ -726,6 +752,27 @@ func (_Stream *StreamSession) Deposit() (*types.Transaction, error) {
 // Solidity: function deposit() returns()
 func (_Stream *StreamTransactorSession) Deposit() (*types.Transaction, error) {
 	return _Stream.Contract.Deposit(&_Stream.TransactOpts)
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0xbb57a5ed.
+//
+// Solidity: function endStream() returns()
+func (_Stream *StreamTransactor) EndStream(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Stream.contract.Transact(opts, "endStream")
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0xbb57a5ed.
+//
+// Solidity: function endStream() returns()
+func (_Stream *StreamSession) EndStream() (*types.Transaction, error) {
+	return _Stream.Contract.EndStream(&_Stream.TransactOpts)
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0xbb57a5ed.
+//
+// Solidity: function endStream() returns()
+func (_Stream *StreamTransactorSession) EndStream() (*types.Transaction, error) {
+	return _Stream.Contract.EndStream(&_Stream.TransactOpts)
 }
 
 // Refund is a paid mutator transaction binding the contract method 0x590e1ae3.

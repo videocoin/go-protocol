@@ -28,7 +28,7 @@ var (
 )
 
 // StreamManagerABI is the input ABI used to generate the binding from.
-const StreamManagerABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"addInputChunkId\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"refundAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"allowRefund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"removeValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"revokeRefund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"addValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"createStream\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"chunks\",\"type\":\"uint256[]\"}],\"name\":\"approveStreamCreation\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requests\",\"outputs\":[{\"name\":\"approved\",\"type\":\"bool\"},{\"name\":\"refund\",\"type\":\"bool\"},{\"name\":\"client\",\"type\":\"address\"},{\"name\":\"stream\",\"type\":\"address\"},{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"RTMP\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"RTMP\",\"type\":\"string\"},{\"name\":\"bitrates\",\"type\":\"uint256[]\"}],\"name\":\"requestStream\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"isValidator\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"client\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamApproved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"RefundAllowed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"RefundRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"InputChunkAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}]"
+const StreamManagerABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"addInputChunkId\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"refundAllowed\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"allowRefund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"removeValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"revokeRefund\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"addValidator\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"endStream\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"createStream\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"chunks\",\"type\":\"uint256[]\"}],\"name\":\"approveStreamCreation\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requests\",\"outputs\":[{\"name\":\"approved\",\"type\":\"bool\"},{\"name\":\"refund\",\"type\":\"bool\"},{\"name\":\"ended\",\"type\":\"bool\"},{\"name\":\"client\",\"type\":\"address\"},{\"name\":\"stream\",\"type\":\"address\"},{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"RTMP\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"streamId\",\"type\":\"uint256\"},{\"name\":\"RTMP\",\"type\":\"string\"},{\"name\":\"bitrates\",\"type\":\"uint256[]\"}],\"name\":\"requestStream\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"v\",\"type\":\"address\"}],\"name\":\"isValidator\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"client\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamApproved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamAddress\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"StreamCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"validator\",\"type\":\"address\"}],\"name\":\"ValidatorRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"RefundAllowed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"}],\"name\":\"RefundRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"chunkId\",\"type\":\"uint256\"}],\"name\":\"InputChunkAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"streamId\",\"type\":\"uint256\"},{\"indexed\":true,\"name\":\"caller\",\"type\":\"address\"}],\"name\":\"StreamEnded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}]"
 
 // StreamManager is an auto generated Go binding around an Ethereum contract.
 type StreamManager struct {
@@ -278,10 +278,11 @@ func (_StreamManager *StreamManagerCallerSession) RefundAllowed(streamId *big.In
 
 // Requests is a free data retrieval call binding the contract method 0x81d12c58.
 //
-// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, address client, address stream, uint256 streamId, string RTMP)
+// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, bool ended, address client, address stream, uint256 streamId, string RTMP)
 func (_StreamManager *StreamManagerCaller) Requests(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	Approved bool
 	Refund   bool
+	Ended    bool
 	Client   common.Address
 	Stream   common.Address
 	StreamId *big.Int
@@ -290,6 +291,7 @@ func (_StreamManager *StreamManagerCaller) Requests(opts *bind.CallOpts, arg0 *b
 	ret := new(struct {
 		Approved bool
 		Refund   bool
+		Ended    bool
 		Client   common.Address
 		Stream   common.Address
 		StreamId *big.Int
@@ -302,10 +304,11 @@ func (_StreamManager *StreamManagerCaller) Requests(opts *bind.CallOpts, arg0 *b
 
 // Requests is a free data retrieval call binding the contract method 0x81d12c58.
 //
-// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, address client, address stream, uint256 streamId, string RTMP)
+// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, bool ended, address client, address stream, uint256 streamId, string RTMP)
 func (_StreamManager *StreamManagerSession) Requests(arg0 *big.Int) (struct {
 	Approved bool
 	Refund   bool
+	Ended    bool
 	Client   common.Address
 	Stream   common.Address
 	StreamId *big.Int
@@ -316,10 +319,11 @@ func (_StreamManager *StreamManagerSession) Requests(arg0 *big.Int) (struct {
 
 // Requests is a free data retrieval call binding the contract method 0x81d12c58.
 //
-// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, address client, address stream, uint256 streamId, string RTMP)
+// Solidity: function requests(uint256 ) constant returns(bool approved, bool refund, bool ended, address client, address stream, uint256 streamId, string RTMP)
 func (_StreamManager *StreamManagerCallerSession) Requests(arg0 *big.Int) (struct {
 	Approved bool
 	Refund   bool
+	Ended    bool
 	Client   common.Address
 	Stream   common.Address
 	StreamId *big.Int
@@ -431,6 +435,27 @@ func (_StreamManager *StreamManagerSession) CreateStream(streamId *big.Int) (*ty
 // Solidity: function createStream(uint256 streamId) returns(address)
 func (_StreamManager *StreamManagerTransactorSession) CreateStream(streamId *big.Int) (*types.Transaction, error) {
 	return _StreamManager.Contract.CreateStream(&_StreamManager.TransactOpts, streamId)
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0x50d55afc.
+//
+// Solidity: function endStream(uint256 streamId) returns()
+func (_StreamManager *StreamManagerTransactor) EndStream(opts *bind.TransactOpts, streamId *big.Int) (*types.Transaction, error) {
+	return _StreamManager.contract.Transact(opts, "endStream", streamId)
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0x50d55afc.
+//
+// Solidity: function endStream(uint256 streamId) returns()
+func (_StreamManager *StreamManagerSession) EndStream(streamId *big.Int) (*types.Transaction, error) {
+	return _StreamManager.Contract.EndStream(&_StreamManager.TransactOpts, streamId)
+}
+
+// EndStream is a paid mutator transaction binding the contract method 0x50d55afc.
+//
+// Solidity: function endStream(uint256 streamId) returns()
+func (_StreamManager *StreamManagerTransactorSession) EndStream(streamId *big.Int) (*types.Transaction, error) {
+	return _StreamManager.Contract.EndStream(&_StreamManager.TransactOpts, streamId)
 }
 
 // RemoveValidator is a paid mutator transaction binding the contract method 0x40a141ff.
@@ -1337,6 +1362,147 @@ func (_StreamManager *StreamManagerFilterer) WatchStreamCreated(opts *bind.Watch
 				// New log arrived, parse the event and forward to the user
 				event := new(StreamManagerStreamCreated)
 				if err := _StreamManager.contract.UnpackLog(event, "StreamCreated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// StreamManagerStreamEndedIterator is returned from FilterStreamEnded and is used to iterate over the raw logs and unpacked data for StreamEnded events raised by the StreamManager contract.
+type StreamManagerStreamEndedIterator struct {
+	Event *StreamManagerStreamEnded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *StreamManagerStreamEndedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(StreamManagerStreamEnded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(StreamManagerStreamEnded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *StreamManagerStreamEndedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *StreamManagerStreamEndedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// StreamManagerStreamEnded represents a StreamEnded event raised by the StreamManager contract.
+type StreamManagerStreamEnded struct {
+	StreamId *big.Int
+	Caller   common.Address
+	Raw      types.Log // Blockchain specific contextual infos
+}
+
+// FilterStreamEnded is a free log retrieval operation binding the contract event 0xde05e689a2a03aa3267e2f457184c649b080aaa00013ed27d21b85bcb04901ff.
+//
+// Solidity: event StreamEnded(uint256 indexed streamId, address indexed caller)
+func (_StreamManager *StreamManagerFilterer) FilterStreamEnded(opts *bind.FilterOpts, streamId []*big.Int, caller []common.Address) (*StreamManagerStreamEndedIterator, error) {
+
+	var streamIdRule []interface{}
+	for _, streamIdItem := range streamId {
+		streamIdRule = append(streamIdRule, streamIdItem)
+	}
+	var callerRule []interface{}
+	for _, callerItem := range caller {
+		callerRule = append(callerRule, callerItem)
+	}
+
+	logs, sub, err := _StreamManager.contract.FilterLogs(opts, "StreamEnded", streamIdRule, callerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &StreamManagerStreamEndedIterator{contract: _StreamManager.contract, event: "StreamEnded", logs: logs, sub: sub}, nil
+}
+
+// WatchStreamEnded is a free log subscription operation binding the contract event 0xde05e689a2a03aa3267e2f457184c649b080aaa00013ed27d21b85bcb04901ff.
+//
+// Solidity: event StreamEnded(uint256 indexed streamId, address indexed caller)
+func (_StreamManager *StreamManagerFilterer) WatchStreamEnded(opts *bind.WatchOpts, sink chan<- *StreamManagerStreamEnded, streamId []*big.Int, caller []common.Address) (event.Subscription, error) {
+
+	var streamIdRule []interface{}
+	for _, streamIdItem := range streamId {
+		streamIdRule = append(streamIdRule, streamIdItem)
+	}
+	var callerRule []interface{}
+	for _, callerItem := range caller {
+		callerRule = append(callerRule, callerItem)
+	}
+
+	logs, sub, err := _StreamManager.contract.WatchLogs(opts, "StreamEnded", streamIdRule, callerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(StreamManagerStreamEnded)
+				if err := _StreamManager.contract.UnpackLog(event, "StreamEnded", log); err != nil {
 					return err
 				}
 				event.Raw = log
