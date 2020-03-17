@@ -1,0 +1,3 @@
+[submodule "contracts"]
+	path = contracts
+	url = github.com:videocoin/protocol.git
