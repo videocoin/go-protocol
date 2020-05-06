@@ -45,7 +45,7 @@ gomod:
 	go mod tidy
 
 .PHONY: generate
-generate: libs abigen bingen codegen gomod
+generate: abigen bingen codegen gomod
 
 .PHONY: clean
 clean:
