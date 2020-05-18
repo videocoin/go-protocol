@@ -57,6 +57,7 @@ clean:
 .PHONY: dockerized
 dockerized: libs dirs
 	COMMAND="${ABIGEN_DOCKER}" ./_assets/abigen.sh /contracts /abi
-	COMMAND="${BINGEN_DOCKER}" ./_assets/bingen.sh /contracts /abi
+	COMMAND="${BINGEN_DOCKER}" ./_assets/bingen.sh /contracts /build
 	COMMAND="${CODEGEN_DOCKER}" ./_assets/codegen.sh /abi /build /staking /streams
 	go mod tidy
+
