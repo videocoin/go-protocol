@@ -61,3 +61,8 @@ dockerized: libs dirs
 	COMMAND="${CODEGEN_DOCKER}" ./_assets/codegen.sh /abi /build /staking /streams
 	go mod tidy
 
+.PHONY: vendor
+vendor:
+	go mod tidy
+	go mod vendor
+	modvendor -copy="**/*.c **/*.h" -v
